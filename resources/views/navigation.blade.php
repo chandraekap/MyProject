@@ -24,6 +24,9 @@
                 <a href="/shop/open">Open Shop </a>
             @endif
         </td>
+        <td style="padding-left: 50px;">
+            Hello, {{ $user->first_name.' '.$user->last_name }}
+        </td>
         <td>
             <a href="/logout">logout</a>
         </td>

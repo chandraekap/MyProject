@@ -34,3 +34,6 @@ Route::get('seller/{flag}', 'SellerController@sellerList');
 Route::get('notifications', 'NotificationController@index');
 Route::get('notifications/read/{id}/{flag}', 'NotificationController@flagNotification');
 
+Route::get('shop/open', 'ShopController@create');
+Route::post('shop/open', 'ShopController@store');
+

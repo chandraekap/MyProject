@@ -40,17 +40,6 @@ class MySqlUserRepository implements UserRepository
 
     public function findUsersByRole($role_name, $sort_by, $order, $search_name = null)
     {
-        /*$user = Auth::user();
-        $result = $this->user->where('id', '!=', $user->id)->orderBy($sort_by, $order)->paginate(10);
-        $filter_result = $result->load(['roles' => function($query) use($role_name){
-            $query->where('name', '=', $role_name);
-        }]);
-
-        foreach($filter_result as $key => $result)
-        {
-            if(empty($result->roles->count()))
-                unset($filter_result[$key]);
-        }*/
         $role_repo = app(RoleRepository::class);
         $role = $role_repo->findByName($role_name);
         $user = Auth::user();
@@ -67,7 +56,7 @@ class MySqlUserRepository implements UserRepository
     {
         $result = $this->user->create($data);
         $role_repo = app(MySqlRoleRepository::class);
-        $role = $role_repo->find(1);
+        $role = $role_repo->findByName("buyer");
         $user_roles = app(MySqlUserRolesRepository::class);
         $user_roles->create($result->id, $role->id);
 
@@ -82,5 +71,15 @@ class MySqlUserRepository implements UserRepository
     public function delete(User $user)
     {
 
+    }
+
+    public function addRole(User $user)
+    {
+        $role_repo = app(MySqlRoleRepository::class);
+        $role = $role_repo->findByName('seller');
+        $user_roles = app(MySqlUserRolesRepository::class);
+        $user_roles->create($user->id, $role->id);
+
+        return $user;
     }
 }

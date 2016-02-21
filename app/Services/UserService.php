@@ -72,4 +72,11 @@ class UserService
 
         return $user;
     }
+
+    public function addUserRole(User $user)
+    {
+        $response = $this->user_repo->addRole($user);
+
+        return $response;
+    }
 }
